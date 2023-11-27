@@ -1,0 +1,41 @@
+<section>
+  <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+    <ion-list [inset]="true">
+      <ion-item>
+        <ion-input type="text"
+                   label="Title"
+                   placeholder="Your todo"
+                   formControlName="title">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="text"
+                   label="Date"
+                   placeholder="Select date"
+                   [readonly]="true"
+                   formControlName="formattedDate"
+                   id="todo-date">
+        </ion-input>
+        <ion-icon slot="end" name="calendar-clear-outline"></ion-icon>
+      </ion-item>
+
+      <ion-modal trigger="todo-date" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+        <ng-template>
+          <ion-datetime [showDefaultButtons]="true"
+                        presentation="date"
+                        formControlName="date"
+                        color="primary"
+                        size="cover">
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+
+      <div class="ion-text-center ion-margin-top">
+        <ion-button type="submit">
+          {{ isEditMode ? 'Update' : 'Save' }}
+        </ion-button>
+      </div>
+    </ion-list>
+  </form>
+</section>

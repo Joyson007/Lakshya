@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>To-Do</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"
+                       text="Back"
+                       icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-todo-info [todo]="todo"/>
+</ion-content>

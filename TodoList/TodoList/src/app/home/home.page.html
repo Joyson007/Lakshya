@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      To-Do List
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button color="dark" (click)="changeTheme()">
+        <ion-icon *ngIf="themeToggle" slot="icon-only" name="sunny-outline"></ion-icon>
+        <ion-icon *ngIf="!themeToggle" slot="icon-only" name="moon-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar placeholder="Search todo"
+                 [formControl]="searchControl"
+                 mode="ios">
+  </ion-searchbar>
+
+  <ng-container *ngIf="todoList.length > 0; else emptyToDo">
+
+    <ng-container *ngIf="filteredTodos.length > 0; else noResults">
+      <ion-card *ngFor="let todo of filteredTodos"
+                class="ion-margin-bottom">
+        <ion-card-header>
+          <ion-card-title class="d-flex ion-align-items-center">
+            <ion-checkbox class="ion-margin-end"
+                          [checked]="todo.isCompleted"
+                          (ionChange)="onChangeEntryStatus(todo)">
+            </ion-checkbox>
+            <span (click)="onViewEntry(todo.id)">{{ todo.title }}</span>
+          </ion-card-title>
+          <ion-card-subtitle>{{ todo.date | date:'mediumDate' }}</ion-card-subtitle>
+        </ion-card-header>
+
+        <div class="ion-text-end">
+          <ion-button color="danger" fill="clear" (click)="onRemoveEntry(todo.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="onViewEntry(todo.id)">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card>
+    </ng-container>
+
+    <ng-template #noResults>
+      <div class="ion-padding">
+        <ion-text color="medium"
+                  class="d-flex ion-align-items-center ion-justify-content-center">
+          No todos to show
+        </ion-text>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #emptyToDo>
+    <div class="ion-padding">
+      <ion-text color="medium"
+                class="d-flex ion-align-items-center ion-justify-content-center"
+                (click)="onNewEntry()">
+        <ion-icon name="add-circle-outline"></ion-icon>&nbsp;Add your first todo
+      </ion-text>
+    </div>
+  </ng-template>
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button (click)="onNewEntry()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
